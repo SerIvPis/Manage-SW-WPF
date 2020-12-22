@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\Программирование\Repos\Console_SW_develop\SolidWorks.API.Specification\SolidWorks.API.Specification.csproj">
+      <Project>{5c4b4b78-a974-4268-8029-cfe3616fade8}</Project>
+      <Name>SolidWorks.API.Specification</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

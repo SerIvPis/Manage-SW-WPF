@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Manage_SW"
         mc:Ignorable="d"
         Title="Управление SW" Height="630" Width="1120" MinWidth="900" MinHeight="450" WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
             <RowDefinition Height="4*"/>
@@ -18,7 +18,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <WrapPanel Margin="3" Grid.ColumnSpan="3" >
-            <Button Margin="2">Команда</Button>
+            <Button Margin="2" FontSize="15" FontWeight="ExtraBlack"  Click="Button_Click"> Для тестирование кода</Button>
             <Button Margin="2">Команда</Button>
             <Button Margin="2">Команда</Button>
             <Button Margin="2">Команда</Button>
@@ -43,6 +43,20 @@
         <StackPanel Grid.ColumnSpan="3" Grid.Row="2">
                     <TextBlock TextAlignment="Center"> Отчеты </TextBlock>
         </StackPanel>
+        
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock TextAlignment="Center"> Отчеты </TextBlock>
+            <ListBox x:Name="lbTest"></ListBox>
+            
+        </Grid>
 
 
 
