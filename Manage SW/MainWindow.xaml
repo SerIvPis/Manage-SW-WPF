@@ -5,8 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Manage_SW"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Управление SW" Height="630" Width="1120" MinWidth="900" MinHeight="450" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <WrapPanel Margin="3" Grid.ColumnSpan="3" >
+            <Button Margin="2">Команда</Button>
+            <Button Margin="2">Команда</Button>
+            <Button Margin="2">Команда</Button>
+            <Button Margin="2">Команда</Button>
+            <Button Margin="2">Команда</Button>
+            <Button Margin="2">Команда</Button>
+            <Button Margin="2">Команда</Button>
+            <Button Margin="2">Команда</Button>
+        </WrapPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <TextBlock TextAlignment="Center">Открытые документы</TextBlock>
+            <TreeView BorderThickness="1">
+                <TreeViewItem >1</TreeViewItem>
+                <TreeViewItem>2</TreeViewItem>
+                <TreeViewItem>3</TreeViewItem>
+            </TreeView>
+            
+        </StackPanel>
+        <StackPanel Grid.Column="2" Grid.Row="1">
+            <TextBlock TextAlignment="Center"> Результаты операций</TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.ColumnSpan="3" Grid.Row="2">
+                    <TextBlock TextAlignment="Center"> Отчеты </TextBlock>
+        </StackPanel>
+
+
+
     </Grid>
 </Window>
