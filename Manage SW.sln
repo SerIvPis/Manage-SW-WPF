@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidWorks.API.Specificatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidWorks.API.SpecificationTests", "D:\Программирование\Repos\Console_SW_develop\SolidWorks.API.SpecificationTests\SolidWorks.API.SpecificationTests.csproj", "{EF9F671C-99A7-42B0-807C-B32510F0658E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidWorks.API.BoxingClassSW", "SolidWorks.API.BoxingClassSW\SolidWorks.API.BoxingClassSW.csproj", "{9952EE86-F1DC-4D15-801F-FDA45D52508C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidWorks.API.BoxingClassSWTests", "SolidWorks.API.BoxingClassSWTests\SolidWorks.API.BoxingClassSWTests.csproj", "{24AED6BB-2FF2-400C-893B-425EF1D144DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{EF9F671C-99A7-42B0-807C-B32510F0658E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF9F671C-99A7-42B0-807C-B32510F0658E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF9F671C-99A7-42B0-807C-B32510F0658E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9952EE86-F1DC-4D15-801F-FDA45D52508C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9952EE86-F1DC-4D15-801F-FDA45D52508C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9952EE86-F1DC-4D15-801F-FDA45D52508C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9952EE86-F1DC-4D15-801F-FDA45D52508C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24AED6BB-2FF2-400C-893B-425EF1D144DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24AED6BB-2FF2-400C-893B-425EF1D144DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24AED6BB-2FF2-400C-893B-425EF1D144DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24AED6BB-2FF2-400C-893B-425EF1D144DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
