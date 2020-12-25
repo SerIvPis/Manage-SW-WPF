@@ -14,9 +14,14 @@ namespace SolidWorks.API.BoxingSW.Tests
     [TestClass()]
     public class SwDocumentPropertyTests
     {
+        /// <summary>
+        /// Переменные для тестов
+        /// </summary>
         public static SWconnect SwApp = new SWconnect();
         public static ModelDoc2 SwModel = (ModelDoc2)SwApp.SwObject.ActiveDoc;
         public static SwDocumentProperty swProp = new SwDocumentProperty( SwModel );
+        public static string[] _nameProp = {"Test property","Test property another", "Some property"};
+        public static string[] _valueProp = {"Test value","Test value another", "Some value"};
 
 
         [TestMethod()]
@@ -44,31 +49,27 @@ namespace SolidWorks.API.BoxingSW.Tests
         [TestMethod()]
         public void AddTest( )
         {
-            swProp.Add( "", new SwProperty( "Пример", "Новое значение", swCustomInfoType_e.swCustomInfoText ) );
-            swProp.Add( "", new SwProperty( "Основное свойство", "Значение", swCustomInfoType_e.swCustomInfoText ) );
-            swProp.Add( "По умолчанию", new SwProperty( "Пример", "Значение", swCustomInfoType_e.swCustomInfoText ) );
-            swProp.Add( "По умолчанию", new SwProperty( "Добавление свойства", "Изменненое Test", swCustomInfoType_e.swCustomInfoText ) );
-            Assert.IsTrue( swProp.GetPropertys( "" )[ swProp.GetPropertys( "" ).Count - 1 ].Value == "Значение" );
+            swProp.Add( "", new SwProperty( _nameProp[0], _valueProp[0], swCustomInfoType_e.swCustomInfoText ) );
+            swProp.Add( "", new SwProperty( _nameProp[1], _valueProp[1], swCustomInfoType_e.swCustomInfoText ) );
+            swProp.Add( "По умолчанию", new SwProperty( _nameProp[2], _valueProp[2], swCustomInfoType_e.swCustomInfoText ) );
+            Assert.IsTrue( swProp.GetPropertys( "" )[ swProp.GetPropertys( "" ).Count - 1 ].Value == _valueProp[ 1 ] );
         }
 
         [TestMethod()]
         public void RemoveTest( )
         {
-            swProp.Add( "", new SwProperty( "Пример", "Новое значение", swCustomInfoType_e.swCustomInfoText ) );
-            swProp.Add( "", new SwProperty( "Основное свойство", "Значение", swCustomInfoType_e.swCustomInfoText ) );
-            swProp.Add( "По умолчанию", new SwProperty( "Пример", "Значение", swCustomInfoType_e.swCustomInfoText ) );
-            swProp.Add( "По умолчанию", new SwProperty( "Добавление свойства", "Изменненое Test", swCustomInfoType_e.swCustomInfoText ) );
+            swProp.Add( "", new SwProperty( _nameProp[ 0 ], _valueProp[ 0 ], swCustomInfoType_e.swCustomInfoText ) );
+            swProp.Add( "", new SwProperty( _nameProp[ 1 ], _valueProp[ 1 ], swCustomInfoType_e.swCustomInfoText ) );
+            swProp.Add( "По умолчанию", new SwProperty( _nameProp[ 2 ], _valueProp[ 2 ], swCustomInfoType_e.swCustomInfoText ) );
 
             Assert.IsTrue( swProp.Remove( "",
-                new SwProperty( "Пример", "Новое значение", swCustomInfoType_e.swCustomInfoText ) ) == 0);
+                new SwProperty( _nameProp[ 0 ], _valueProp[ 0 ], swCustomInfoType_e.swCustomInfoText )) == 0);
             Assert.IsTrue( swProp.Remove( "",
-                new SwProperty( "Основное свойство", "Значение", swCustomInfoType_e.swCustomInfoText ) ) ==0);
-            Assert.IsTrue( swProp.Remove( "По умолчанию", 
-                new SwProperty( "Пример", "Значение", swCustomInfoType_e.swCustomInfoText ) ) == 0 );
+                 new SwProperty( _nameProp[ 1 ], _valueProp[ 1 ], swCustomInfoType_e.swCustomInfoText ) )  ==0);
             Assert.IsTrue( swProp.Remove( "По умолчанию",
-                new SwProperty( "Добавление свойства", "Изменненое Test", swCustomInfoType_e.swCustomInfoText ) ) == 0 );
+                new SwProperty( _nameProp[ 2 ], _valueProp[ 2 ], swCustomInfoType_e.swCustomInfoText ) ) == 0 );
             Assert.IsFalse( swProp.Remove( "По умолчанию",
-                new SwProperty( "Доба", "Test", swCustomInfoType_e.swCustomInfoText ) ) == 0 );
+                new SwProperty( _nameProp[ 0 ], _valueProp[ 2 ], swCustomInfoType_e.swCustomInfoText ) ) == 0 );
         }
     }
 }

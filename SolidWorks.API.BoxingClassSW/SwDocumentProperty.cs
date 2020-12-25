@@ -151,7 +151,7 @@ namespace SolidWorks.API.BoxingSW
 
             //Добавляем свойство в модель SolidWorks
             return _customPropManager.Add3( prop.Name, (int)swCustomInfoType_e.swCustomInfoText,
-                                    prop.Value, (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd );
+                                    prop.Value, (int)swCustomPropertyAddOption_e.swCustomPropertyReplaceValue );
 
 
         }
