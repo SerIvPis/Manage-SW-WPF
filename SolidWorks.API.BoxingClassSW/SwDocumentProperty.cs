@@ -2,9 +2,10 @@
 using SolidWorks.Interop.swconst;
 using System.Data;
 using System.Collections.Generic;
-using SolidWorks.Interop.swconst;
 using System.Linq;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.IO;
 
 namespace SolidWorks.API.BoxingSW
 {
@@ -12,14 +13,18 @@ namespace SolidWorks.API.BoxingSW
     {
         private Dictionary<string,List<SwProperty>> _ConfigPropertys;
         private CustomPropertyManager _customPropManager;
-
         public ModelDoc2 SwModel { get; }
 
+        public SwDocumentProperty( )
+        {
+            
+        }
         public SwDocumentProperty(ModelDoc2 swModel)
         {
             SwModel = swModel;
             _ConfigPropertys = new Dictionary<string, List<SwProperty>>();
             SetPropertysConfig();
+           
         }
 
        
@@ -189,6 +194,31 @@ namespace SolidWorks.API.BoxingSW
                 return 1;
             }
         }
+
+        /// <summary>
+        /// Сохранение свойств в файл json
+        /// </summary>
+        public void WriteJson( )
+        {
+            foreach (string nameConfig in _ConfigPropertys.Keys)
+            {
+                using (FileStream fs = new FileStream( $"{nameConfig}_Property.json", FileMode.OpenOrCreate ))
+                {
+                    JsonSerializer.SerializeAsync< List< SwProperty > >( fs, this._ConfigPropertys[ nameConfig ] );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Дессериализация из файла JSON
+        /// </summary>
+        public static  SwDocumentProperty ReadJson( )
+        {
+            
+            return  JsonSerializer.Deserialize<SwDocumentProperty>(File.ReadAllText( "SwDocumentProperty.json" ));
+            
+        }
+
         #endregion
 
         //public void ApplyChangePropertyModel(string tableName)

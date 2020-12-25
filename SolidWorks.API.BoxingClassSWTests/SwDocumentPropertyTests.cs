@@ -20,9 +20,8 @@ namespace SolidWorks.API.BoxingSW.Tests
         public static SWconnect SwApp = new SWconnect();
         public static ModelDoc2 SwModel = (ModelDoc2)SwApp.SwObject.ActiveDoc;
         public static SwDocumentProperty swProp = new SwDocumentProperty( SwModel );
-        public static string[] _nameProp = {"Test property","Test property another", "Some property"};
-        public static string[] _valueProp = {"Test value","Test value another", "Some value"};
-
+        public static string[ ] _nameProp = { "Test property", "Test property another", "Some property" };
+        public static string[ ] _valueProp = { "Test value", "Test value another", "Some value" };
 
         [TestMethod()]
         public void SwDocumentPropertyTest( )
@@ -49,9 +48,9 @@ namespace SolidWorks.API.BoxingSW.Tests
         [TestMethod()]
         public void AddTest( )
         {
-            swProp.Add( "", new SwProperty( _nameProp[0], _valueProp[0], swCustomInfoType_e.swCustomInfoText ) );
-            swProp.Add( "", new SwProperty( _nameProp[1], _valueProp[1], swCustomInfoType_e.swCustomInfoText ) );
-            swProp.Add( "По умолчанию", new SwProperty( _nameProp[2], _valueProp[2], swCustomInfoType_e.swCustomInfoText ) );
+            swProp.Add( "", new SwProperty( _nameProp[ 0 ], _valueProp[ 0 ], swCustomInfoType_e.swCustomInfoText ) );
+            swProp.Add( "", new SwProperty( _nameProp[ 1 ], _valueProp[ 1 ], swCustomInfoType_e.swCustomInfoText ) );
+            swProp.Add( "По умолчанию", new SwProperty( _nameProp[ 2 ], _valueProp[ 2 ], swCustomInfoType_e.swCustomInfoText ) );
             Assert.IsTrue( swProp.GetPropertys( "" )[ swProp.GetPropertys( "" ).Count - 1 ].Value == _valueProp[ 1 ] );
         }
 
@@ -63,13 +62,19 @@ namespace SolidWorks.API.BoxingSW.Tests
             swProp.Add( "По умолчанию", new SwProperty( _nameProp[ 2 ], _valueProp[ 2 ], swCustomInfoType_e.swCustomInfoText ) );
 
             Assert.IsTrue( swProp.Remove( "",
-                new SwProperty( _nameProp[ 0 ], _valueProp[ 0 ], swCustomInfoType_e.swCustomInfoText )) == 0);
+                new SwProperty( _nameProp[ 0 ], _valueProp[ 0 ], swCustomInfoType_e.swCustomInfoText ) ) == 0 );
             Assert.IsTrue( swProp.Remove( "",
-                 new SwProperty( _nameProp[ 1 ], _valueProp[ 1 ], swCustomInfoType_e.swCustomInfoText ) )  ==0);
+                 new SwProperty( _nameProp[ 1 ], _valueProp[ 1 ], swCustomInfoType_e.swCustomInfoText ) ) == 0 );
             Assert.IsTrue( swProp.Remove( "По умолчанию",
                 new SwProperty( _nameProp[ 2 ], _valueProp[ 2 ], swCustomInfoType_e.swCustomInfoText ) ) == 0 );
             Assert.IsFalse( swProp.Remove( "По умолчанию",
                 new SwProperty( _nameProp[ 0 ], _valueProp[ 2 ], swCustomInfoType_e.swCustomInfoText ) ) == 0 );
+        }
+
+        [TestMethod()]
+        public void WriteJsonTest( )
+        {
+            SwDocumentProperty.WriteJson( swProp );
         }
     }
 }

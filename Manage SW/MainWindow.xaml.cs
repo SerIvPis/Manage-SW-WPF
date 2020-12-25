@@ -34,15 +34,19 @@ namespace Manage_SW
             ModelDoc2 SwModel = (ModelDoc2)SwApp.SwObject.ActiveDoc;
             SwDocumentProperty swProp = new SwDocumentProperty( SwModel );
 
-            foreach (var item in swProp.GetPropertys(""))
-            {
-                lbTest.Items.Add( $"\t{item.Name} = {item.Value}" );
 
-                //lbTest.Items.Add( $"{item}" );
-                //foreach (var i in swProp._ConfigPropertys[ item ])
-                //{
-                //}
-            }
+            swProp.WriteJson();
+
+
+            //foreach (var item in swProp.GetPropertys(""))
+            //{
+            //    lbTest.Items.Add( $"\t{item.Name} = {item.Value}" );
+
+            //    //lbTest.Items.Add( $"{item}" );
+            //    //foreach (var i in swProp._ConfigPropertys[ item ])
+            //    //{
+            //    //}
+            //}
 
         }
     }
