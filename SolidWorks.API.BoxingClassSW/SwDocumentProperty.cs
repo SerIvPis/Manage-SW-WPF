@@ -6,55 +6,55 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace SolidWorks.API.BoxingSW
 {
     public class SwDocumentProperty
     {
-        private Dictionary<string,List<SwProperty>> _ConfigPropertys;
+        private Dictionary<string, List<SwProperty>> _ConfigPropertys;
         private CustomPropertyManager _customPropManager;
         public ModelDoc2 SwModel { get; }
 
         public SwDocumentProperty( )
         {
-            
+
         }
-        public SwDocumentProperty(ModelDoc2 swModel)
+        public SwDocumentProperty( ModelDoc2 swModel )
         {
             SwModel = swModel;
             _ConfigPropertys = new Dictionary<string, List<SwProperty>>();
             SetPropertysConfig();
-           
         }
 
-       
+
         /// <summary>
         /// Заполнение свойств заданной конфигурации
         /// </summary>
         /// <param name="confgName"></param>
-        private void SetProperty(string confgName)
+        private void SetProperty( string confgName )
         {
             object vPropNames = null;
-            string[] propNames;
+            string[ ] propNames;
             object vPropTypes = null;
             object vPropValues = null;
-            object[] propValues;
+            object[ ] propValues;
             object resolved = null;
             object linkProp = null;
             int CountPropertyes;
 
-            _customPropManager = SwModel.Extension.CustomPropertyManager[confgName];
+            _customPropManager = SwModel.Extension.CustomPropertyManager[ confgName ];
 
 
             // Get the custom properties
-            CountPropertyes = _customPropManager.GetAll3(ref vPropNames,
+            CountPropertyes = _customPropManager.GetAll3( ref vPropNames,
                 ref vPropTypes,
                 ref vPropValues,
                 ref resolved,
-                ref linkProp);
+                ref linkProp );
 
-            propValues = (object[])vPropValues;            
-            propNames = (string[])vPropNames;
+            propValues = (object[ ])vPropValues;
+            propNames = (string[ ])vPropNames;
 
             // Заполняем лист свойств 
             List<SwProperty> listProp = new List<SwProperty>();
@@ -63,18 +63,18 @@ namespace SolidWorks.API.BoxingSW
                 listProp.Add( new SwProperty( propNames[ i ], propValues[ i ], swCustomInfoType_e.swCustomInfoText ) );
             }
 
-            _ConfigPropertys.Add( confgName, listProp );                      
+            _ConfigPropertys.Add( confgName, listProp );
         }
 
 
         /// <summary>
         /// Заполнение свойств всех имеющихся конфигураций
         /// </summary>
-        private void SetPropertysConfig()
+        private void SetPropertysConfig( )
         {
-            string[] configNames = null;
+            string[ ] configNames = null;
             SetProperty( "" ); // Добавление общих свойств документа
-            configNames = (string[])SwModel.GetConfigurationNames();
+            configNames = (string[ ])SwModel.GetConfigurationNames();
 
             if (configNames != null)
             {
@@ -87,7 +87,71 @@ namespace SolidWorks.API.BoxingSW
         }
 
 
-    #region *** Public method ***
+        #region *** Public method ***
+
+        /// <summary>
+        /// Очишаем свойства в SolidWorks
+        /// </summary>
+        /// <param name="nameConfig"></param>
+        public void ClearPropetyesModelSw( string nameConfig )
+        {
+            //Выбор текущей конфигурации
+            _customPropManager = SwModel.Extension.CustomPropertyManager[ nameConfig ];
+            //Получаем массив имен свойств            
+            string[ ] Names = _customPropManager.GetNames() as string[ ];
+
+            if (Names == null)
+            {
+                return;
+            }
+            // Удаляем свойства
+            foreach (string name in Names)
+            {
+                _customPropManager.Delete2( name );
+            }
+        }
+
+
+        /// <summary>
+        /// Удаляем все свойства конфигурации.
+        /// </summary>
+        /// <param name="configName"></param>
+        public void ClearProtertys( string nameConfig )
+        {
+            if (!_ConfigPropertys.ContainsKey( nameConfig ))
+            {
+                throw new KeyNotFoundException( nameof( _ConfigPropertys ) );
+            }
+
+            // Очищаем список свойств выбранной конфигурации
+            _ConfigPropertys[ nameConfig ].Clear();
+
+            // Очищаем свойства в SolidWorks
+            ClearPropetyesModelSw( nameConfig );
+        }
+
+        /// <summary>
+        /// Добавляем в SolidWorks свойства из объекта.
+        /// </summary>
+        /// <param name="nameConfig"></param>
+        private void UpdateSw( string nameConfig )
+        {
+            if (!_ConfigPropertys.ContainsKey( nameConfig ))
+            {
+                throw new KeyNotFoundException( nameof( _ConfigPropertys ) );
+            }
+
+            // Выбираем исполнение, в котором собираемся менять свойства
+            _customPropManager = SwModel.Extension.CustomPropertyManager[ nameConfig ];
+
+            // Добавляем свойства в модель SolidWorks
+            foreach (SwProperty prop in _ConfigPropertys[ nameConfig ])
+            {
+                _customPropManager.Add3( prop.Name, (int)swCustomInfoType_e.swCustomInfoText,
+                                    prop.Value, (int)swCustomPropertyAddOption_e.swCustomPropertyReplaceValue );
+            }
+        }
+
         /// <summary>
         /// Возвращает список конфигураций модели
         /// </summary>
@@ -128,9 +192,7 @@ namespace SolidWorks.API.BoxingSW
         /// <returns></returns>
         public int Add(string nameConfig , SwProperty prop )
         {
-           
-
-            if (prop == null)
+           if (prop == null)
             {
                 throw new System.ArgumentNullException( nameof( prop ) );
             }
@@ -157,8 +219,34 @@ namespace SolidWorks.API.BoxingSW
             //Добавляем свойство в модель SolidWorks
             return _customPropManager.Add3( prop.Name, (int)swCustomInfoType_e.swCustomInfoText,
                                     prop.Value, (int)swCustomPropertyAddOption_e.swCustomPropertyReplaceValue );
+        }
 
 
+        /// <summary>
+        ///  Метод добавляет свойства в файл SolidWOrks 
+        /// </summary>
+        /// <param name="nameConfig"></param>
+        /// <param name="propList"></param>
+        /// <returns></returns>
+        public int Add( string nameConfig, List<SwProperty> propList )
+        {
+            if (propList == null)
+            {
+                throw new System.ArgumentNullException( nameof( propList ) );
+            }
+
+            if (!_ConfigPropertys.ContainsKey( nameConfig ))
+            {
+                throw new KeyNotFoundException( nameof( propList ) );
+            }
+
+            // Добавляем свойства в модель данных свойств
+            _ConfigPropertys[ nameConfig ].AddRange( propList );
+
+            // Передаем свойства в модель SOlidWorks 
+            UpdateSw( nameConfig );
+
+            return 1;
         }
 
         /// <summary>
@@ -196,27 +284,35 @@ namespace SolidWorks.API.BoxingSW
         }
 
         /// <summary>
-        /// Сохранение свойств в файл json
+        /// Сохранение свойств в файл XMl
         /// </summary>
-        public void WriteJson( )
+        public void SaveXmlFile( )
         {
             foreach (string nameConfig in _ConfigPropertys.Keys)
             {
-                using (FileStream fs = new FileStream( $"{nameConfig}_Property.json", FileMode.OpenOrCreate ))
+                using (FileStream fs = new FileStream( $"_{nameConfig}.xml",
+                    FileMode.Create ))
                 {
-                    JsonSerializer.SerializeAsync< List< SwProperty > >( fs, this._ConfigPropertys[ nameConfig ] );
+                    XmlSerializer xmlFormat = new XmlSerializer( typeof( List<SwProperty> ) );
+                    xmlFormat.Serialize( fs, this._ConfigPropertys[ nameConfig ] );
                 }
             }
         }
 
         /// <summary>
-        /// Дессериализация из файла JSON
+        /// Дессериализация из файла XML
         /// </summary>
-        public static  SwDocumentProperty ReadJson( )
+        public List<SwProperty> ReadXmlFile( string path)
         {
-            
-            return  JsonSerializer.Deserialize<SwDocumentProperty>(File.ReadAllText( "SwDocumentProperty.json" ));
-            
+            XmlSerializer xmlFormat = new XmlSerializer( typeof( List<SwProperty> ) );
+            using (FileStream fs = new FileStream( path, FileMode.Open,
+                   FileAccess.ReadWrite,
+                   FileShare.None ))
+            {
+                List<SwProperty> listXml = (List<SwProperty>)xmlFormat.Deserialize( fs );                 
+                return listXml;
+            }
+           
         }
 
         #endregion

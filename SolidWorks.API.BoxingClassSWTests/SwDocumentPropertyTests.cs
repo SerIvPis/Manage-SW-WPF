@@ -40,9 +40,15 @@ namespace SolidWorks.API.BoxingSW.Tests
         [TestMethod()]
         public void GetPropertysTest( )
         {
+            swProp.ClearProtertys( "" );
+            swProp.ClearProtertys( "По умолчанию" );
+            swProp.Add( "", new SwProperty( _nameProp[ 0 ], _valueProp[ 0 ], swCustomInfoType_e.swCustomInfoText ) );
+            swProp.Add( "", new SwProperty( _nameProp[ 1 ], _valueProp[ 1 ], swCustomInfoType_e.swCustomInfoText ) );
+            swProp.Add( "По умолчанию", new SwProperty( _nameProp[ 2 ], _valueProp[ 2 ], swCustomInfoType_e.swCustomInfoText ) );
+
             Assert.IsTrue( swProp.GetPropertys( "По " ) == null );
-            Assert.IsTrue( swProp.GetPropertys( "По умолчанию" )[ 0 ].Name == "Обозначение" );
-            Assert.IsTrue( swProp.GetPropertys( "По умолчанию" )[ 0 ].Value == "" );
+            Assert.IsTrue( swProp.GetPropertys( "По умолчанию" )[ 0 ].Name == _nameProp[ 2 ] );
+            Assert.IsTrue( swProp.GetPropertys( "По умолчанию" )[ 0 ].Value == _valueProp[ 2 ] );
         }
 
         [TestMethod()]
@@ -57,6 +63,7 @@ namespace SolidWorks.API.BoxingSW.Tests
         [TestMethod()]
         public void RemoveTest( )
         {
+            
             swProp.Add( "", new SwProperty( _nameProp[ 0 ], _valueProp[ 0 ], swCustomInfoType_e.swCustomInfoText ) );
             swProp.Add( "", new SwProperty( _nameProp[ 1 ], _valueProp[ 1 ], swCustomInfoType_e.swCustomInfoText ) );
             swProp.Add( "По умолчанию", new SwProperty( _nameProp[ 2 ], _valueProp[ 2 ], swCustomInfoType_e.swCustomInfoText ) );
@@ -71,10 +78,28 @@ namespace SolidWorks.API.BoxingSW.Tests
                 new SwProperty( _nameProp[ 0 ], _valueProp[ 2 ], swCustomInfoType_e.swCustomInfoText ) ) == 0 );
         }
 
+
         [TestMethod()]
-        public void WriteJsonTest( )
+        public void ClearPropetyesModelSwTest( )
         {
-            SwDocumentProperty.WriteJson( swProp );
+            swProp.ClearProtertys( "" );
+            swProp.ClearPropetyesModelSw( "" );
+            Assert.IsTrue( swProp.GetPropertys( "" ).Count == 0);
+        }
+
+        [TestMethod()]
+        public void ClearProtertysTest( )
+        {
+            swProp.ClearProtertys( "" );
+            Assert.IsTrue( swProp.GetPropertys( "" ).Count == 0 );
+        }
+     
+
+        [TestMethod()]
+        public void ReadXmlFileTest( )
+        {
+            List<SwProperty> xml = swProp.ReadXmlFile( "Test.xml" );
+            Assert.IsTrue( xml.Contains( new SwProperty( "Revision", "1", swCustomInfoType_e.swCustomInfoText )) );
         }
     }
 }

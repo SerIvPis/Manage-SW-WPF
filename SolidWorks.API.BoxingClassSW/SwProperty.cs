@@ -2,12 +2,15 @@
 using SolidWorks.Interop.swconst;
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace SolidWorks.API.BoxingSW
-{
+{   
+    [Serializable]
     /// <summary>
     /// Класс Свойства пользовательское свойство из св-в файла SolidWorks
     /// </summary>
+    /// 
     public class SwProperty : IEquatable<SwProperty>
     {
         public SwProperty(string name, object value, swCustomInfoType_e type)
@@ -17,9 +20,17 @@ namespace SolidWorks.API.BoxingSW
             this.Type = type; // тип свойства
         }
 
-        public string Name { get;  }
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public SwProperty( )
+        {
+
+        }
+
+        public string Name { get; set; }
         public string Value { get; set; }
-        public swCustomInfoType_e Type { get;  }
+        public swCustomInfoType_e Type { get; }
 
         public override bool Equals( object obj )
         {
