@@ -123,8 +123,6 @@ namespace SolidWorks.API.BoxingSW
         /// <returns></returns>
         public int Add(string nameConfig , SwProperty prop )
         {
-           
-
             if (prop == null)
             {
                 throw new System.ArgumentNullException( nameof( prop ) );

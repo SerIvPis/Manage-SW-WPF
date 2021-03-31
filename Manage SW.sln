@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidWorks.API.BoxingClassS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidWorks.API.BoxingClassSWTests", "SolidWorks.API.BoxingClassSWTests\SolidWorks.API.BoxingClassSWTests.csproj", "{24AED6BB-2FF2-400C-893B-425EF1D144DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolidWorks.API.Utility", "D:\Программирование\Repos\SW_Test_API_\SolidWorks.API.Utility\SolidWorks.API.Utility.csproj", "{3BC3EF21-295B-4872-8FC4-189A51A28341}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{24AED6BB-2FF2-400C-893B-425EF1D144DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24AED6BB-2FF2-400C-893B-425EF1D144DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24AED6BB-2FF2-400C-893B-425EF1D144DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BC3EF21-295B-4872-8FC4-189A51A28341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC3EF21-295B-4872-8FC4-189A51A28341}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC3EF21-295B-4872-8FC4-189A51A28341}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC3EF21-295B-4872-8FC4-189A51A28341}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

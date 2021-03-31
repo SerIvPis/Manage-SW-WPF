@@ -33,17 +33,18 @@ namespace Manage_SW
             SWconnect SwApp = new SWconnect();
             ModelDoc2 SwModel = (ModelDoc2)SwApp.SwObject.ActiveDoc;
             SwDocumentProperty swProp = new SwDocumentProperty( SwModel );
-
-            foreach (var item in swProp.GetPropertys(""))
+            foreach (var config in swProp.GetConfiguration( ))
             {
-                lbTest.Items.Add( $"\t{item.Name} = {item.Value}" );
+                foreach (var item in swProp.GetPropertys( config )) 
+                {
+                    lbTest.Items.Add( $"\t{item.Name} = {item.Value}" );
 
-                //lbTest.Items.Add( $"{item}" );
-                //foreach (var i in swProp._ConfigPropertys[ item ])
-                //{
-                //}
+                    //lbTest.Items.Add( $"{item}" );
+                    //foreach (var i in swProp._ConfigPropertys[ item ])
+                    //{
+                    //}
+                }
             }
-
         }
     }
 }
